@@ -1,0 +1,14 @@
+# Never commit private evidence or raw emails
+evidence/**
+*.eml
+*.msg
+*.mbox
+*.pst
+
+# Local exports
+*.pdf
+*.xlsx
+
+# System
+.DS_Store
+Thumbs.db

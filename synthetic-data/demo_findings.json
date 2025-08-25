@@ -1,0 +1,12 @@
+{
+  "generated_at": "2025-08-25T05:31:02.732532Z",
+  "overall_signal": 78,
+  "signals": {
+    "burst_index": 82,
+    "boilerplate_score": 88,
+    "header_uniformity": 74,
+    "id_monotonicity": 69,
+    "duration_adequacy": 65
+  },
+  "notes": "Synthetic illustrative output only."
+}

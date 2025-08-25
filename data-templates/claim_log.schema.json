@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ClaimLog",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "claim_id": {
+      "type": "string"
+    },
+    "claimant": {
+      "type": "string"
+    },
+    "policy": {
+      "type": "string",
+      "enum": [
+        "track",
+        "monetize",
+        "block",
+        "unknown"
+      ]
+    },
+    "match_start": {
+      "type": "number"
+    },
+    "match_end": {
+      "type": "number"
+    },
+    "match_duration": {
+      "type": "number"
+    },
+    "video_id/url": {
+      "type": "string"
+    },
+    "body_text": {
+      "type": "string"
+    },
+    "raw_headers": {
+      "type": "string"
+    },
+    "sender_email": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "timestamp",
+    "claim_id",
+    "claimant",
+    "policy"
+  ],
+  "additionalProperties": true
+}
