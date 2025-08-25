@@ -56,9 +56,12 @@ These are just a few of the many cases that motivated this project - creators be
 - **`evidence-kit.md`** - Step-by-step checklist for creators to collect evidence
 - **`dashboard-spec.md`** - What platforms should provide for transparency
 
-### **🔍 New Analysis Tools** (`/docs/`)
-- **`automation-detection-guide.md`** - How to spot automated abuse patterns
-- **`action-plan.md`** - Complete strategy from immediate response to systemic change
+### **🔍 Verification & Transparency** (`/docs/`)
+- **`transparency-guide.md`** - Complete verification guide
+- **`transparency.html`** - Live transparency dashboard
+- **`evidence-kit.md`** - Evidence collection and redaction
+- **`automation-detection-guide.md`** - Pattern recognition
+- **`action-plan.md`** - Response strategies
 
 ### **📱 Interactive Tools** (`/docs/ui/`)
 - **`index.html`** - Enhanced analysis interface (open in any web browser)
@@ -229,4 +232,51 @@ This enhanced toolkit represents a comprehensive approach to combating automated
 ---
 
 *This enhanced version builds on the original Content ID Defense Kit with advanced tools, comprehensive guides, and community-driven improvements. Use responsibly and contribute to the collective effort.*
+
+## 🔍 **Transparency & Safety - Our Core Commitment**
+
+### **We Believe Creators Deserve Absolute Certainty**
+
+**Your privacy and safety are non-negotiable.** That's why we've built the most transparent, verifiable toolkit possible:
+
+### **✅ What We Promise - And How to Verify:**
+
+**1. Code Does Exactly What We Claim**
+- **No hidden functions** - every line serves a documented purpose
+- **No minification** - all code readable in browser dev tools
+- **No external scripts** - everything runs locally
+
+**2. Zero External Connections**
+- **Completely offline** - works with internet disconnected
+- **No data uploads** - files never leave your device
+- **No API calls** - all processing in browser memory
+
+**3. Complete Anonymity**
+- **No tracking** - no cookies, no analytics, no identification
+- **No storage** - nothing saved between sessions
+- **No user accounts** - use without revealing who you are
+
+**4. Data Privacy Guaranteed**
+- **Local processing only** - all work done in your browser
+- **Local exports only** - files saved to your device
+- **No cloud storage** - we never see your data
+
+### **🔍 Verify These Claims Yourself:**
+
+- **Live Transparency Dashboard:** [Open Now](../../docs/ui/transparency.html)
+- **Complete Verification Guide:** [Read Guide](docs/transparency-guide.md)
+- **GitHub Issue Template:** [Report Concerns](../../.github/ISSUE_TEMPLATE/verification-request.md)
+
+### **🎯 Our Transparency Commitment:**
+
+We commit to:
+- **Immediate response** to any verification concerns
+- **Public disclosure** of any issues found
+- **Code transparency** - no hidden functionality
+- **User control** - you decide what to share
+- **Continuous improvement** based on feedback
+
+**If you can't verify our claims, don't use our tools. Your safety comes first.**
+
+---
 
