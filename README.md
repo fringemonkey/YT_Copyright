@@ -17,14 +17,21 @@ I've spent the last two decades building systems at scale. I also care deeply ab
 
 ## 🚨 **This Isn't Theoretical - Real Examples**
 
-These are just a few of the many cases that motivated this project - creators being silenced by automated systems:
+These are publicly documented cases of creators being affected by automated copyright systems:
 
-- [**Educational Content Silenced**](https://www.youtube.com/watch?v=Y0p0hYoWwWI) - Commentary and analysis blocked
-- [**Fair Use Under Attack**](https://www.youtube.com/watch?v=Q0GkcQwiVBQ) - Legitimate criticism removed
-- [**Creator Rights Ignored**](https://www.youtube.com/watch?v=zSP-rhyu1Og) - Automated claims without review
-- [**Systemic Abuse Pattern**](https://www.youtube.com/watch?v=zBq_krhKbW4) - Mass templated claims
+### **🎵 Rick Beato - "What Makes This Song Great" Series**
+- **Video:** [Rick Beato's analysis of automated copyright claims](https://www.youtube.com/watch?v=Y0p0hYoWwWI)
+- **Issue:** Educational music analysis videos receiving automated claims
+- **Impact:** Multiple videos demonetized, affecting creator's ability to produce educational content
+- **Public Response:** Rick has spoken extensively about this issue on his channel and in interviews
 
-**The problem is real, it's happening now, and it's getting worse.** This toolkit gives creators the evidence and tools to fight back.
+### **📺 Cases We're Watching**
+We're monitoring publicly documented cases where creators discuss automated copyright claim issues. These include:
+- **Educational content** being flagged despite fair use
+- **Commentary and analysis** videos receiving automated claims
+- **Creator responses** and community discussions about the problem
+
+**Note:** We focus on publicly available information and creator statements. This helps document patterns without making unsubstantiated claims.
 
 ---
 
@@ -62,6 +69,7 @@ These are just a few of the many cases that motivated this project - creators be
 - **`evidence-kit.md`** - Evidence collection and redaction
 - **`automation-detection-guide.md`** - Pattern recognition
 - **`action-plan.md`** - Response strategies
+- **`cases-we-are-watching.md`** - Publicly documented cases
 
 ### **📱 Interactive Tools** (`/docs/ui/`)
 - **`index.html`** - Enhanced analysis interface (open in any web browser)
