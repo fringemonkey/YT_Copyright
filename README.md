@@ -288,3 +288,31 @@ We commit to:
 
 ---
 
+## 🎯 **What This Is - And What It's NOT**
+
+### **✅ What This IS:**
+- **🛡️ Defensive Documentation** - Your insurance policy against automated systems
+- **🔒 Private & Personal** - Document your own experiences safely
+- **📚 Understanding Tool** - Learn how these systems actually work
+- **🛠️ Toolkit for You** - Tools to protect your content and rights
+- **📋 Evidence Collection** - Safe, provable documentation methods
+
+### **❌ What This is NOT:**
+- **🚫 Not a "Fight"** - We're not here to pick battles
+- **🚫 Not "Anti-Artist"** - We support rightful ownership
+- **🚫 Not "Legal Advice"** - Just tools to document what happens
+- **🚫 Not "Automated"** - You control what gets shared
+- **🚫 Not "Scary"** - This is about protection, not confrontation
+
+---
+
+**Just like you wouldn't drive without insurance, you shouldn't create content without documenting what happens to it.**
+
+- **📸 Screenshots** of claim emails and dashboards
+- **📝 Logs** of when claims arrive and what they say
+- **🔍 Pattern recognition** to spot automated vs. human review
+- **📦 Safe evidence packages** you can share if needed
+- **🛡️ Protection** against false claims and automated errors
+
+**This isn't about fighting - it's about being prepared.**
+

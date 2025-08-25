@@ -1,3 +1,18 @@
+// Content ID Defense Kit - Main Application
+// A toolkit for creators to protect themselves by documenting automated copyright claims safely
+
+// This app helps you:
+// - Document claims safely and privately
+// - Recognize automated vs. human review patterns  
+// - Build evidence packages to protect your content
+// - Understand how these systems actually work
+
+// Think of this as your content insurance policy - not about fighting, but about being prepared and protected.
+
+// All processing happens locally in your browser
+// No data is uploaded or shared with anyone
+// Your privacy and safety are our top priority
+
 (() => {
   const e = React.createElement;
 
@@ -14,7 +29,7 @@
 
   function Header({dark, onToggle}) {
     return e('div', {className:'header'},
-      e('div', {className:'brand'}, 'Content ID Defense Kit — Enhanced Analysis'),
+      e('div', {className:'brand'}, '🛡️ Content Protection Toolkit — Safe Documentation & Analysis'),
       e('div', {className:'header-controls'},
         e('button', {className:'export-btn', onClick:() => exportData()}, 'Export Data'),
         e('button', {className:'toggle', onClick:onToggle}, dark ? 'Light mode' : 'Dark mode')
@@ -25,7 +40,7 @@
   function Sidebar({active, onSelect}) {
     return e('div', {className:'sidebar'},
       e('div', {className:'section'},
-        e('h4', null, 'Documentation'),
+        e('h4', null, '🛡️ Protection Tools'),
         e('div', {className:'nav'},
           DOC_LINKS.map(l => e('a', {
             key:l.id, href:'#', onClick:(ev)=>{ev.preventDefault(); onSelect(l)},
@@ -34,16 +49,16 @@
         )
       ),
       e('div', {className:'section'},
-        e('h4', null, 'Data Analysis'),
+        e('h4', null, '📊 Analysis & Documentation'),
         e('div', {className:'small'}, 'Explore synthetic demo data: /synthetic-data/demo_claims.csv'),
-        e('div', {className:'small'}, 'Upload your own CSV for analysis')
+        e('div', {className:'small'}, 'Upload your own CSV for safe, private analysis')
       ),
       e('div', {className:'section'},
-        e('h4', null, 'Quick Actions'),
+        e('h4', null, '🛠️ Quick Actions'),
         e('div', {className:'nav'},
-          e('a', {href:'#', onClick:() => generateReport()}, 'Generate Report'),
-          e('a', {href:'#', onClick:() => detectPatterns()}, 'Detect Patterns'),
-          e('a', {href:'#', onClick:() => exportEvidence()}, 'Export Evidence')
+          e('a', {href:'#', onClick:() => generateReport()}, 'Generate Protection Report'),
+          e('a', {href:'#', onClick:() => detectPatterns()}, 'Detect Automation Patterns'),
+          e('a', {href:'#', onClick:() => exportEvidence()}, 'Export Safe Evidence Package')
         )
       )
     );
@@ -258,7 +273,7 @@
       // Overview Mode
       analysisMode === 'overview' && e('div', null,
         e('div', {className:'card'},
-          e('h3', null, 'Key Metrics'),
+          e('h3', null, '🛡️ Protection Metrics'),
           e('div', {className:'kv-grid'},
             e('div', {className:'metric'}, 
               e('div', {className:'metric-value'}, stats?.total || '—'),
@@ -279,7 +294,7 @@
           )
         ),
         e('div', {className:'card'},
-          e('h3', null, 'Claim Volume Timeline'),
+          e('h3', null, '📊 Claim Volume Timeline - Look for Automation Patterns'),
           e('canvas', {ref: canvasRef, height: 200})
         )
       ),
@@ -287,10 +302,10 @@
       // Patterns Mode
       analysisMode === 'patterns' && e('div', null,
         e('div', {className:'card'},
-          e('h3', null, 'Automation Indicators'),
+          e('h3', null, '🔍 Automation Detection - Your Protection Evidence'),
           e('div', {className:'pattern-grid'},
             e('div', {className:'pattern-section'},
-              e('h4', null, 'Template Reuse'),
+              e('h4', null, '📋 Template Reuse Patterns'),
               e('div', {className:'pattern-list'},
                 patterns?.templateReuse?.map((p, i) => 
                   e('div', {key: i, className: 'pattern-item'},
@@ -301,7 +316,7 @@
               )
             ),
             e('div', {className:'pattern-section'},
-              e('h4', null, 'Burst Patterns'),
+              e('h4', null, '⏰ Burst Timing Patterns'),
               e('div', {className:'pattern-list'},
                 patterns?.burstPatterns?.map((p, i) => 
                   e('div', {key: i, className: `pattern-item ${p.suspicious ? 'suspicious' : ''}`},
@@ -318,7 +333,7 @@
       // Data Table
       e('div', {className:'card'},
         e('div', {className:'table-header'},
-          e('h3', null, 'Claim Data (First 50 rows)'),
+          e('h3', null, '📋 Your Claim Data - Document Everything for Protection'),
           e('div', {className:'table-controls'},
             e('input', {type: 'text', placeholder: 'Search...', className: 'search-input'}),
             e('select', {className: 'filter-select'},
@@ -370,7 +385,7 @@
           tab==='docs' ? e(DocsPane, {doc}) : e(DataPane, null)
         )
       ),
-      e('footer', null, 'Enhanced Analysis UI - No outbound actions. Use responsibly.')
+      e('footer', null, '🛡️ Content Protection Toolkit - All processing local, no data shared. Use to protect your content safely.')
     );
   }
 
