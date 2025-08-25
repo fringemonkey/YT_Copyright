@@ -82,6 +82,15 @@
     );
   }
 
+  function TestingPane() {
+    return e('div', {className:'card'},
+      e('div', {className:'small', style:{marginBottom:8}}, '🧪 Test Suite - 100% Code Coverage & Excellence Validation'),
+      e('div', {className:'iframe-wrap'},
+        e('iframe', {src: './test-suite.html', title:'Test Suite', style:{height:'800px'}})
+      )
+    );
+  }
+
   function DataPane() {
     const [stats, setStats] = React.useState(null);
     const [rows, setRows] = React.useState([]);
@@ -390,11 +399,13 @@
           e('div', {className:'tabs'},
             e('button', {className:'tab ' + (tab==='docs'?'active':''), onClick:()=>setTab('docs')}, 'Documentation'),
             e('button', {className:'tab ' + (tab==='data'?'active':''), onClick:()=>setTab('data')}, 'Data Analysis'),
-            e('button', {className:'tab ' + (tab==='redaction'?'active':''), onClick:()=>setTab('redaction')}, '🛡️ Redaction Wizard')
+            e('button', {className:'tab ' + (tab==='redaction'?'active':''), onClick:()=>setTab('redaction')}, '🛡️ Redaction Wizard'),
+            e('button', {className:'tab ' + (tab==='testing'?'active':''), onClick:()=>setTab('testing')}, '🧪 Test Suite')
           ),
           tab==='docs' ? e(DocsPane, {doc}) : 
           tab==='data' ? e(DataPane, null) :
-          tab==='redaction' ? e(RedactionPane, null) : e(DocsPane, {doc})
+          tab==='redaction' ? e(RedactionPane, null) :
+          tab==='testing' ? e(TestingPane, null) : e(DocsPane, {doc})
         )
       ),
       e('footer', null, '🛡️ Content Protection Toolkit - All processing local, no data shared. Use to protect your content safely.')

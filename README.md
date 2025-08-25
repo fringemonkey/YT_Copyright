@@ -57,11 +57,14 @@ We're monitoring publicly documented cases where creators discuss automated copy
 
 ## 📚 **Repository Structure - Where to Find What You Need**
 
-### **📖 Core Documentation** (`/docs/`)
-- **`index.md`** - Main documentation hub and navigation
-- **`counsel-brief.md`** - Legal strategies and discovery requests for attorneys
-- **`evidence-kit.md`** - Step-by-step checklist for creators to collect evidence
-- **`dashboard-spec.md`** - What platforms should provide for transparency
+### **📚 Documentation** (`/docs/`)
+- **`index.md`** - Project overview and getting started
+- **`evidence-kit.md`** - Complete evidence collection guide
+- **`action-plan.md`** - Step-by-step protection strategy
+- **`counsel-brief.md`** - Legal and policy context
+- **`transparency-guide.md`** - Verify our safety claims
+- **`testing-framework.md`** - 🧪 Comprehensive testing documentation
+- **`cases-we-are-watching.md`** - Public case tracking
 
 ### **🔍 Verification & Transparency** (`/docs/`)
 - **`transparency-guide.md`** - Complete verification guide
@@ -77,6 +80,7 @@ We're monitoring publicly documented cases where creators discuss automated copy
 - **`styles.css`** - Modern, responsive design
 - **`transparency.html`** - Live transparency dashboard
 - **`redaction-wizard.html`** - 🛡️ Step-by-step redaction tool
+- **`test-suite.html`** - 🧪 Comprehensive testing framework
 
 ### **📊 Data Templates** (`/data-templates/`)
 - **`claim_log.sample.csv`** - Sample claim logging data
@@ -124,6 +128,11 @@ We're monitoring publicly documented cases where creators discuss automated copy
 - **Start Here:** [Redaction Wizard](../../docs/ui/redaction-wizard.html) - Step-by-step privacy protection
 - **Learn How:** [Evidence Kit](docs/evidence-kit.md) - Complete redaction guide
 - **Get Templates:** [Redaction Templates](data-templates/redaction-template.md) - Ready-to-use formats
+
+### **🧪 Want to Verify Our Excellence?**
+- **Start Here:** [Test Suite](../../docs/ui/test-suite.html) - 100% code coverage validation
+- **Learn How:** [Transparency Guide](docs/transparency-guide.md) - Verify our safety claims
+- **Get Proof:** [Transparency Dashboard](docs/ui/transparency.html) - Live monitoring
 
 ## 🛠️ **Getting Started - No Technical Knowledge Required**
 
