@@ -65,10 +65,12 @@ These are just a few of the many cases that motivated this project - creators be
 - **`app.js`** - Pattern detection and data analysis engine
 - **`styles.css`** - Professional styling and responsive design
 
-### **📋 Templates & Data** (`/data-templates/` & `/synthetic-data/`)
-- **`enhanced_claim_log.csv`** - Comprehensive evidence collection template
-- **`demo_claims.csv`** - Sample data to test and learn the tools
-- **`claim_log.schema.json`** - Technical specification for data structure
+### **📊 Data Templates** (`/data-templates/`)
+- **`claim_log.sample.csv`** - Sample claim logging data
+- **`claim_log.schema.json`** - Data structure definition
+- **`hash_manifest_template.csv`** - File integrity verification
+- **`enhanced_claim_log.csv`** - Comprehensive evidence collection
+- **`redaction-template.md`** - Safe evidence sharing guide
 
 ### **📝 Outreach & Advocacy** (`/docs/outreach/`)
 - **`youtube-open-letter.md`** - Policy demands for YouTube platform

@@ -10,6 +10,7 @@ This document provides safe, effective templates for promoting the Content ID De
 - **No Accusations:** Don't accuse specific companies/individuals of illegality
 - **Clear Requests:** Include specific asks like "sanity-check the Evidence Kit" or "try the synthetic demo UI"
 - **Legal Disclaimers:** Always include NOTICE and "not legal advice" disclaimers
+- **Safe Evidence Sharing:** Emphasize redaction and privacy protection in all outreach
 
 ---
 
@@ -113,6 +114,7 @@ I've built a comprehensive toolkit to help creators document and analyze automat
 - Pattern detection tools
 - Legal strategy guides
 - Community action plans
+- **Safe evidence redaction tools** (CRITICAL for privacy)
 
 **What it doesn't do:**
 - No automation tools
@@ -121,6 +123,8 @@ I've built a comprehensive toolkit to help creators document and analyze automat
 
 **Repository:** https://github.com/fringemonkey/YT_Copyright
 **Live Demo:** https://fringemonkey.github.io/YT_Copyright/ui/
+
+**⚠️ IMPORTANT:** The toolkit includes comprehensive redaction guides to protect your privacy when sharing evidence. Never share unredacted claim details publicly!
 
 Looking for feedback from creators who've dealt with automated claims. What's missing? What could be clearer?
 
@@ -156,6 +160,13 @@ Looking for collaborators, feedback, and community input. This addresses a real 
 ---
 
 ## 🚨 **Risk Mitigation Checklist**
+
+### **Evidence Sharing & Redaction**
+- ✅ **Always emphasize redaction** in outreach materials
+- ✅ **Provide redaction templates** and tools
+- ✅ **Warn against sharing unredacted evidence**
+- ✅ **Include privacy protection guidance**
+- ✅ **Offer redaction verification methods**
 
 ### **Defamation Risk**
 - ✅ Don't state facts you can't substantiate
