@@ -73,6 +73,15 @@
     );
   }
 
+  function RedactionPane() {
+    return e('div', {className:'card'},
+      e('div', {className:'small', style:{marginBottom:8}}, '🛡️ Redaction Wizard - Make your evidence safe to share'),
+      e('div', {className:'iframe-wrap'},
+        e('iframe', {src: './redaction-wizard.html', title:'Redaction Wizard', style:{height:'800px'}})
+      )
+    );
+  }
+
   function DataPane() {
     const [stats, setStats] = React.useState(null);
     const [rows, setRows] = React.useState([]);
@@ -380,9 +389,12 @@
         e('div', {className:'main'},
           e('div', {className:'tabs'},
             e('button', {className:'tab ' + (tab==='docs'?'active':''), onClick:()=>setTab('docs')}, 'Documentation'),
-            e('button', {className:'tab ' + (tab==='data'?'active':''), onClick:()=>setTab('data')}, 'Data Analysis')
+            e('button', {className:'tab ' + (tab==='data'?'active':''), onClick:()=>setTab('data')}, 'Data Analysis'),
+            e('button', {className:'tab ' + (tab==='redaction'?'active':''), onClick:()=>setTab('redaction')}, '🛡️ Redaction Wizard')
           ),
-          tab==='docs' ? e(DocsPane, {doc}) : e(DataPane, null)
+          tab==='docs' ? e(DocsPane, {doc}) : 
+          tab==='data' ? e(DataPane, null) :
+          tab==='redaction' ? e(RedactionPane, null) : e(DocsPane, {doc})
         )
       ),
       e('footer', null, '🛡️ Content Protection Toolkit - All processing local, no data shared. Use to protect your content safely.')

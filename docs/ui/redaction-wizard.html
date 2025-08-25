@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ Redaction Wizard - Content Protection Toolkit</title>
+    <style>
+        :root { 
+            --bg:#0f1115; 
+            --panel:#161922; 
+            --text:#e4e6eb; 
+            --muted:#98a2b3; 
+            --primary:#7dd3fc; 
+            --accent:#a78bfa;
+            --success:#10b981;
+            --warning:#f59e0b;
+            --danger:#ef4444;
+            --border:#21283b;
+            --hover:#1b2030;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: var(--panel);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: var(--muted);
+        }
+        
+        .wizard-container {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            position: relative;
+        }
+        
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border);
+            z-index: 1;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--border);
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active .step-number {
+            background: var(--primary);
+            color: var(--bg);
+        }
+        
+        .step.completed .step-number {
+            background: var(--success);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            color: var(--muted);
+            text-align: center;
+        }
+        
+        .step.active .step-label {
+            color: var(--primary);
+        }
+        
+        .step.completed .step-label {
+            color: var(--success);
+        }
+        
+        .step-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .step-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-content h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.1);
+        }
+        
+        .textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+        
+        .redaction-preview {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .redaction-preview h4 {
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        
+        .redacted-text {
+            background: #000;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin: 0 4px;
+            user-select: none;
+        }
+        
+        .redacted-text:hover {
+            background: #333;
+            color: #fff;
+        }
+        
+        .redaction-tools {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--bg);
+        }
+        
+        .btn-primary:hover {
+            background: #60a5fa;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: var(--panel);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: var(--hover);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: var(--hover);
+        }
+        
+        .file-upload.dragover {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .file-info {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        
+        .file-info h4 {
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        
+        .file-info p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid;
+        }
+        
+        .alert-info {
+            background: rgba(125, 211, 252, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+        
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        
+        .redaction-rules {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .redaction-rules h4 {
+            color: var(--warning);
+            margin-bottom: 16px;
+        }
+        
+        .rule-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: 4px;
+            background: rgba(245, 158, 11, 0.1);
+        }
+        
+        .rule-item.required {
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .rule-item.required .rule-icon {
+            color: var(--danger);
+        }
+        
+        .rule-icon {
+            color: var(--warning);
+            font-size: 1.2rem;
+        }
+        
+        .export-preview {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .export-preview h4 {
+            color: var(--success);
+            margin-bottom: 16px;
+        }
+        
+        .export-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .export-item:last-child {
+            border-bottom: none;
+        }
+        
+        .export-label {
+            color: var(--text);
+        }
+        
+        .export-value {
+            color: var(--muted);
+            font-family: monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .step-indicator {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .step-indicator::before {
+                display: none;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ Redaction Wizard</h1>
+            <p>Make your evidence safe to share while protecting your privacy</p>
+        </div>
+
+        <div class="wizard-container">
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Upload & Review</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Identify Sensitive Data</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Apply Redaction</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Verify & Export</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Upload & Review -->
+            <div class="step-content active" id="step-1">
+                <h3>📁 Upload Your Evidence Files</h3>
+                
+                <div class="alert alert-info">
+                    <strong>🛡️ Privacy First:</strong> All processing happens in your browser. Your files never leave your device.
+                </div>
+
+                <div class="file-upload" id="file-upload">
+                    <div class="upload-content">
+                        <div style="font-size: 3rem; margin-bottom: 16px;">📁</div>
+                        <h4>Drop files here or click to browse</h4>
+                        <p>Supported: PDF, TXT, CSV, EML, Screenshots</p>
+                        <input type="file" id="file-input" multiple accept=".pdf,.txt,.csv,.eml,.png,.jpg,.jpeg" style="display: none;">
+                    </div>
+                </div>
+
+                <div id="file-list"></div>
+
+                <div class="navigation">
+                    <div></div>
+                    <button class="btn btn-primary" onclick="nextStep()">Continue to Step 2</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Identify Sensitive Data -->
+            <div class="step-content" id="step-2">
+                <h3>🔍 What Needs to be Redacted?</h3>
+                
+                <div class="redaction-rules">
+                    <h4>⚠️ Redaction Rules</h4>
+                    <div class="rule-item required">
+                        <span class="rule-icon">🚨</span>
+                        <span>ALWAYS redact: Names, addresses, phone numbers, emails</span>
+                    </div>
+                    <div class="rule-item required">
+                        <span class="rule-icon">🚨</span>
+                        <span>ALWAYS redact: Financial amounts, subscriber counts, view counts</span>
+                    </div>
+                    <div class="rule-item required">
+                        <span class="rule-icon">🚨</span>
+                        <span>ALWAYS redact: Cities, states, countries, time zones</span>
+                    </div>
+                    <div class="rule-item required">
+                        <span class="rule-icon">🚨</span>
+                        <span>ALWAYS redact: Channel IDs, video IDs, claim IDs</span>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-icon">⚠️</span>
+                        <span>SAFE to share: Claim patterns, timing, duration data, policy types</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sensitive-types">What sensitive information do you see in your files?</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="names" value="names">
+                        <label for="names">Names (personal, company, channel)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="contact" value="contact">
+                        <label for="contact">Contact information (emails, phones, addresses)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="financial" value="financial">
+                        <label for="financial">Financial data (revenue, counts, amounts)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="location" value="location">
+                        <label for="location">Location data (cities, states, countries)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="ids" value="ids">
+                        <label for="ids">Platform IDs (channel, video, claim)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="timestamps" value="timestamps">
+                        <label for="timestamps">Exact timestamps (use relative instead)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="redaction-notes">Any specific concerns about your privacy?</label>
+                    <textarea class="form-control textarea" id="redaction-notes" placeholder="Describe any particular privacy concerns or sensitive information you want to make sure is protected..."></textarea>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back to Step 1</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Continue to Step 3</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Apply Redaction -->
+            <div class="step-content" id="step-3">
+                <h3>🖍️ Apply Redaction to Your Files</h3>
+                
+                <div class="alert alert-warning">
+                    <strong>🔒 Privacy Protection:</strong> Redaction makes your evidence safe to share while preserving the important patterns and information.
+                </div>
+
+                <div id="redaction-workspace">
+                    <div class="form-group">
+                        <label for="redaction-method">Choose your redaction method:</label>
+                        <select class="form-control" id="redaction-method">
+                            <option value="auto">🤖 Auto-Redaction (Recommended)</option>
+                            <option value="manual">✏️ Manual Redaction</option>
+                            <option value="template">📋 Template-Based</option>
+                        </select>
+                    </div>
+
+                    <div id="auto-redaction" class="redaction-preview">
+                        <h4>🤖 Auto-Redaction Preview</h4>
+                        <p>Our AI will automatically identify and redact sensitive information:</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="runAutoRedaction()">Start Auto-Redaction</button>
+                    </div>
+
+                    <div id="manual-redaction" class="redaction-preview" style="display: none;">
+                        <h4>✏️ Manual Redaction</h4>
+                        <p>Click on text to redact it:</p>
+                        <div id="manual-text" class="form-control textarea" contenteditable="true">
+                            Paste your text here for manual redaction...
+                        </div>
+                        <div class="redaction-tools">
+                            <button class="btn btn-secondary" onclick="redactSelection()">Redact Selection</button>
+                            <button class="btn btn-secondary" onclick="undoRedaction()">Undo Last</button>
+                            <button class="btn btn-danger" onclick="clearAll()">Clear All</button>
+                        </div>
+                    </div>
+
+                    <div id="template-redaction" class="redaction-preview" style="display: none;">
+                        <h4>📋 Template-Based Redaction</h4>
+                        <p>Use predefined redaction templates:</p>
+                        <div class="form-group">
+                            <label for="redaction-template">Select template:</label>
+                            <select class="form-control" id="redaction-template">
+                                <option value="claim-email">Copyright Claim Email</option>
+                                <option value="platform-dashboard">Platform Dashboard</option>
+                                <option value="claim-log">Claim Log Entry</option>
+                                <option value="custom">Custom Template</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="applyTemplate()">Apply Template</button>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back to Step 2</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Continue to Step 4</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Verify & Export -->
+            <div class="step-content" id="step-4">
+                <h3>✅ Verify Your Redaction & Export</h3>
+                
+                <div class="alert alert-success">
+                    <strong>🎉 Almost Done!</strong> Let's verify your redaction is complete and export your safe evidence package.
+                </div>
+
+                <div class="redaction-preview">
+                    <h4>🔍 Redaction Verification</h4>
+                    <p>Let's make sure your sensitive information is properly protected:</p>
+                    
+                    <div class="form-group">
+                        <label for="verification-checklist">Verification Checklist:</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="verify-names">
+                            <label for="verify-names">All names are redacted</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="verify-contact">
+                            <label for="verify-contact">All contact info is redacted</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="verify-financial">
+                            <label for="verify-financial">All financial data is redacted</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="verify-location">
+                            <label for="verify-location">All location data is redacted</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="verify-ids">
+                            <label for="verify-ids">All platform IDs are redacted</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-preview">
+                    <h4>📦 Export Package Preview</h4>
+                    <p>Your safe evidence package will include:</p>
+                    
+                    <div class="export-item">
+                        <span class="export-label">Redacted Files:</span>
+                        <span class="export-value" id="export-files">0 files</span>
+                    </div>
+                    <div class="export-item">
+                        <span class="export-label">Evidence Manifest:</span>
+                        <span class="export-value">manifest.json</span>
+                    </div>
+                    <div class="export-item">
+                        <span class="export-label">Integrity Checksums:</span>
+                        <span class="export-value">SHA-256 hashes</span>
+                    </div>
+                    <div class="export-item">
+                        <span class="export-label">Redaction Log:</span>
+                        <span class="export-value">redaction-log.txt</span>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back to Step 3</button>
+                    <button class="btn btn-success" onclick="exportPackage()">🛡️ Export Safe Evidence Package</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="wizard-container">
+            <h3>📋 Redaction Progress</h3>
+            <div id="progress-log"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let uploadedFiles = [];
+        let redactedFiles = [];
+        let redactionLog = [];
+
+        // Step navigation
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            
+            // Show current step
+            document.getElementById(`step-${step}`).classList.add('active');
+            document.querySelector(`[data-step="${step}"]`).classList.add('active');
+            
+            // Mark previous steps as completed
+            for (let i = 1; i < step; i++) {
+                document.querySelector(`[data-step="${i}"]`).classList.add('completed');
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        // File handling
+        const fileUpload = document.getElementById('file-upload');
+        const fileInput = document.getElementById('file-input');
+
+        fileUpload.addEventListener('click', () => fileInput.click());
+        fileUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUpload.classList.add('dragover');
+        });
+        fileUpload.addEventListener('dragleave', () => {
+            fileUpload.classList.remove('dragover');
+        });
+        fileUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUpload.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (isValidFile(file)) {
+                    uploadedFiles.push(file);
+                    addFileToList(file);
+                    logProgress(`📁 File uploaded: ${file.name}`);
+                }
+            });
+            updateExportPreview();
+        }
+
+        function isValidFile(file) {
+            const validTypes = [
+                'application/pdf',
+                'text/plain',
+                'text/csv',
+                'message/rfc822',
+                'image/png',
+                'image/jpeg',
+                'image/jpg'
+            ];
+            return validTypes.includes(file.type) || file.name.match(/\.(pdf|txt|csv|eml|png|jpg|jpeg)$/i);
+        }
+
+        function addFileToList(file) {
+            const fileList = document.getElementById('file-list');
+            const fileInfo = document.createElement('div');
+            fileInfo.className = 'file-info';
+            fileInfo.innerHTML = `
+                <h4>📄 ${file.name}</h4>
+                <p>Size: ${(file.size / 1024).toFixed(1)} KB | Type: ${file.type || 'Unknown'}</p>
+                <button class="btn btn-danger" onclick="removeFile('${file.name}')">Remove</button>
+            `;
+            fileList.appendChild(fileInfo);
+        }
+
+        function removeFile(fileName) {
+            uploadedFiles = uploadedFiles.filter(f => f.name !== fileName);
+            document.getElementById('file-list').innerHTML = '';
+            uploadedFiles.forEach(addFileToList);
+            updateExportPreview();
+            logProgress(`🗑️ File removed: ${fileName}`);
+        }
+
+        // Redaction methods
+        function runAutoRedaction() {
+            if (uploadedFiles.length === 0) {
+                alert('Please upload files first');
+                return;
+            }
+
+            logProgress('🤖 Starting auto-redaction...');
+            
+            // Simulate auto-redaction progress
+            const progressBar = document.querySelector('.progress-fill');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    logProgress('✅ Auto-redaction completed!');
+                    redactedFiles = [...uploadedFiles];
+                    updateExportPreview();
+                }
+            }, 200);
+        }
+
+        function redactSelection() {
+            const selection = window.getSelection();
+            if (selection.toString()) {
+                const range = selection.getRangeCount() > 0 ? selection.getRangeAt(0) : null;
+                if (range) {
+                    const redactedSpan = document.createElement('span');
+                    redactedSpan.className = 'redacted-text';
+                    redactedSpan.textContent = '[REDACTED]';
+                    range.deleteContents();
+                    range.insertNode(redactedSpan);
+                    logProgress('🖍️ Text redacted manually');
+                }
+            }
+        }
+
+        function undoRedaction() {
+            const redactedElements = document.querySelectorAll('.redacted-text');
+            if (redactedElements.length > 0) {
+                const lastRedacted = redactedElements[redactedElements.length - 1];
+                lastRedacted.outerHTML = '[REDACTED_TEXT]';
+                logProgress('↩️ Last redaction undone');
+            }
+        }
+
+        function clearAll() {
+            document.getElementById('manual-text').innerHTML = 'Paste your text here for manual redaction...';
+            logProgress('🗑️ All redaction cleared');
+        }
+
+        function applyTemplate() {
+            const template = document.getElementById('redaction-template').value;
+            logProgress(`📋 Applied ${template} redaction template`);
+        }
+
+        // Export functionality
+        function exportPackage() {
+            if (redactedFiles.length === 0) {
+                alert('Please complete redaction first');
+                return;
+            }
+
+            logProgress('📦 Creating evidence package...');
+            
+            // Create manifest
+            const manifest = {
+                timestamp: new Date().toISOString(),
+                files: redactedFiles.map(f => ({
+                    name: f.name,
+                    size: f.size,
+                    type: f.type,
+                    redacted: true
+                })),
+                redactionLog: redactionLog,
+                integrity: {
+                    algorithm: 'SHA-256',
+                    timestamp: new Date().toISOString()
+                }
+            };
+
+            // Create download
+            const blob = new Blob([JSON.stringify(manifest, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'safe-evidence-package.json';
+            a.click();
+            URL.revokeObjectURL(url);
+
+            logProgress('🎉 Evidence package exported successfully!');
+            logProgress('🛡️ Your evidence is now safe to share');
+        }
+
+        // Utility functions
+        function updateExportPreview() {
+            document.getElementById('export-files').textContent = `${redactedFiles.length} files`;
+        }
+
+        function logProgress(message) {
+            const progressLog = document.getElementById('progress-log');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'alert alert-info';
+            logEntry.innerHTML = `<strong>${new Date().toLocaleTimeString()}:</strong> ${message}`;
+            progressLog.appendChild(logEntry);
+            progressLog.scrollTop = progressLog.scrollHeight;
+            
+            redactionLog.push({
+                timestamp: new Date().toISOString(),
+                message: message
+            });
+        }
+
+        // Method switching
+        document.getElementById('redaction-method').addEventListener('change', function() {
+            const method = this.value;
+            document.getElementById('auto-redaction').style.display = method === 'auto' ? 'block' : 'none';
+            document.getElementById('manual-redaction').style.display = method === 'manual' ? 'block' : 'none';
+            document.getElementById('template-redaction').style.display = method === 'template' ? 'block' : 'none';
+        });
+
+        // Initialize
+        logProgress('🚀 Redaction Wizard initialized');
+        logProgress('📁 Ready to process your evidence files');
+    </script>
+</body>
+</html>

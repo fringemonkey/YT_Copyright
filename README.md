@@ -72,9 +72,11 @@ We're monitoring publicly documented cases where creators discuss automated copy
 - **`cases-we-are-watching.md`** - Publicly documented cases
 
 ### **📱 Interactive Tools** (`/docs/ui/`)
-- **`index.html`** - Enhanced analysis interface (open in any web browser)
-- **`app.js`** - Pattern detection and data analysis engine
-- **`styles.css`** - Professional styling and responsive design
+- **`index.html`** - Main application interface
+- **`app.js`** - Enhanced analysis and pattern detection
+- **`styles.css`** - Modern, responsive design
+- **`transparency.html`** - Live transparency dashboard
+- **`redaction-wizard.html`** - 🛡️ Step-by-step redaction tool
 
 ### **📊 Data Templates** (`/data-templates/`)
 - **`claim_log.sample.csv`** - Sample claim logging data
@@ -117,6 +119,11 @@ We're monitoring publicly documented cases where creators discuss automated copy
 1. **Community Building:** Check `docs/action-plan.md` for advocacy strategies
 2. **Contributing:** Read `CONTRIBUTING.md` to help improve the toolkit
 3. **Sharing:** Use the outreach templates in `docs/outreach/`
+
+### **🛡️ Need to Protect Your Evidence?**
+- **Start Here:** [Redaction Wizard](../../docs/ui/redaction-wizard.html) - Step-by-step privacy protection
+- **Learn How:** [Evidence Kit](docs/evidence-kit.md) - Complete redaction guide
+- **Get Templates:** [Redaction Templates](data-templates/redaction-template.md) - Ready-to-use formats
 
 ## 🛠️ **Getting Started - No Technical Knowledge Required**
 
